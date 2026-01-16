@@ -1,5 +1,5 @@
 const{Board}=require("../models");
-const{User}=require("../models");
+const{Column}=require("../models");
 async function adicionarQuadro (req,res) {
  
     try {
@@ -23,7 +23,7 @@ async function buscaQuadrosPorUser(req,res) {
      const id=req.params.id;
      try {
         const quadro=await Board.findAll({ include: [{ 
-                model: User, 
+                model: Column, 
             }],where:{id_owner:id}});
         if(quadro){
              return res.status(200).json(quadro);
