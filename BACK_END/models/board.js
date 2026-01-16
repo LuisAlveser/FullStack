@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     foreignKey: 'id_board',
     onDelete:"CASCADE"
   });
+   Board.belongsToMany(models.User,{through:models.Board_Members,foreignKey:"id_board"});
 
     }
   }
