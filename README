@@ -1,0 +1,14 @@
+📝 Fullstack Kanban SaaS
+Este é um ecossistema completo (API + Client) para gestão de projetos. O foco do projeto foi implementar um fluxo de trabalho profissional, tratando desde a persistência de dados complexos no PostgreSQL até a interface reativa no React.
+
+💻 Tech Stack
+Frontend (React.js)
+Estado Global: Context API ou Redux Toolkit (para gerenciar dados do usuário e boards).
+
+Consumo de API: Axios com instâncias configuradas (BaseURL e Interceptors para Token JWT).
+
+
+Backend (Node.js & Sequelize)
+Banco de Dados: PostgreSQL.
+
+ORM: Sequelize com Migrations e Seeders.
