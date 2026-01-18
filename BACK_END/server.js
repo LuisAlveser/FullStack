@@ -5,7 +5,9 @@ const userRouter= require("./router/UserRouter");
 const boardRouter=require("./router/BoardRouter");
 const columnRouter=require("./router/ColumnRouter");
 const cardRouter=require("./router/CardRouter");
-const board_membersRouter=require("./router/Board_MembersRouter")
+const board_membersRouter=require("./router/Board_MembersRouter");
+const cors = require('cors'); 
+app.use(cors()); 
 app.listen(3001,()=>{
    console.log("Funcionando"); 
 });
