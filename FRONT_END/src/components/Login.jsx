@@ -48,7 +48,6 @@ const Login=()=>{
          
         }else{
               const user={
-          
              email: email,
             password:senha,
         }

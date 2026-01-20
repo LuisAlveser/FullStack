@@ -1,0 +1,21 @@
+.botaologin2 {
+    width: 60%;           
+    height: 45px;           
+    background-color: black; 
+    color: white;           
+    border: none;           
+    border-radius: 8px;     
+    font-size: 16px;        
+    font-weight: bold;       
+    cursor: pointer;        
+    margin-top: 20px;        
+    transition: background 0.3s ease; 
+  
+    
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px; /* Define um espaço fixo de 15px ENTRE cada item */
+}
