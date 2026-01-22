@@ -65,26 +65,23 @@
     
 }
    .quadros {
-    background-color: white; 
+     background-color: white; 
     color: black;
     width: 400px;           
-    height: 150px;         
-      min-height: 200px;
-      align-items: center;
+    min-height: 150px; 
+    height: auto; 
     margin-top: 100px;     
     margin-left: 20px;
     border-radius: 12px;
-    align-content: center;
     padding: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;   
     align-items: center;      
-    justify-content: center;  
+    justify-content: flex-start; 
     gap: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  
+    padding-bottom: 30px; 
   
 }
 .quadros h1 {
@@ -111,17 +108,15 @@
 }
 .quadros li {
     width: 100%;
-    text-align: center; /* Centraliza o texto dentro da li */
+    text-align: center; 
     margin-bottom: 15px;
+   
 }
 .quadros ul {
-    list-style: none; 
-    padding: 0;      
-    margin: 0;      
-    width: 100%;     
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 
@@ -134,9 +129,13 @@
  
 }
 
+
 .acoes-quadro button:hover {
   transform: scale(1.2); 
 }
 .Add{
    size: 80%;
+}
+tag-coluna{
+    padding-top: 10px;
 }

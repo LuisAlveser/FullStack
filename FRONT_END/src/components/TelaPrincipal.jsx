@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaPen,FaTrash } from "react-icons/fa";
 import axios from 'axios';
 import { MdOutlineAdd } from "react-icons/md";
+
+
 const TelaPrincipal=()=>{
 
     const [usuario, setUsuario] = useState(null);
@@ -11,7 +13,16 @@ const TelaPrincipal=()=>{
     const [quadrosIniciados,SetquadrosIniciados]=useState([]);
     const [quadrosEm_Execucao,SetquadrosEm_Excucao]=useState([]);
      const [quadrosTerminados,SetquadrosTerminados]=useState([]);
-     
+       const atualizarQuadro = (quadro) => {
+    navigate('/Board', { state: { dados: quadro } });
+}
+   const atualizarColumn = (column) => {
+    navigate('/Column', { state: { dadoscolumn: column } });
+}
+
+      const adiconarColuna = (quadro) => {
+    navigate('/Column', { state: { dados: quadro } });
+};
     useEffect(() => {
        const usuario= localStorage.getItem("usuario");
        const usuarioObjeto =JSON.parse(usuario);
@@ -70,6 +81,29 @@ const TelaPrincipal=()=>{
         }
       
     }
+      const excluirColuna=async (id)=>{
+       try {
+            await axios.delete(`http://localhost:3001/column/${id}`);
+            
+           
+              const removerColunaDeQuadros = (listaDeQuadros) => 
+            listaDeQuadros.map(quadro => ({
+                ...quadro,
+                Columns: quadro.Columns ? quadro.Columns.filter(c => c.id !== id) : []
+            }));
+
+       
+        SetquadrosIniciados(removerColunaDeQuadros(quadrosIniciados));
+        SetquadrosEm_Excucao(removerColunaDeQuadros(quadrosEm_Execucao));
+        SetquadrosTerminados(removerColunaDeQuadros(quadrosTerminados));
+            
+            alert("Coluna excluída com sucesso!");
+        } catch (error) {
+            console.error("Erro ao excluir:", error);
+            alert("Não foi possível excluir acoluna.");
+        }
+      
+    }
     const criarquadro=async (event)=>{
     
     navigate("/Board");
@@ -92,20 +126,24 @@ const TelaPrincipal=()=>{
         </div>
         <div className='quadros'>
            <h1>Inicializado</h1> 
-            <div className='divisor'></div>
+         
               <div>
      
       {quadrosIniciados.length > 0 ? (
+        
         <ul>
+           
           {quadrosIniciados.map(quadrosIniciados => (
             <li key={quadrosIniciados.id}>
-              {quadrosIniciados.title}   {"Lider :"+usuario.name} 
+                  <div className='divisor'></div> 
+           {"Quadro:" +quadrosIniciados.title} <br/>  {"Lider :" +usuario.name} 
                <div className="acoes-quadro">
-        <button title="Add" onClick={() => handleEditar(quadro.id)}>
+        <button title="Add" onClick={() =>adiconarColuna(quadrosIniciados)}>
           <MdOutlineAdd color="#4ee6c2" />
         </button>
-        <button title="Editar" onClick={() => handleEditar(quadro.id)}>
-          <FaPen color="#ffc107" />
+
+        <button title="Editar" onClick={() =>atualizarQuadro(quadrosIniciados)}>
+          <FaPen color="#4ee6c2" />
         </button>
 
        
@@ -114,11 +152,22 @@ const TelaPrincipal=()=>{
         </button>
          
       </div>
+       
       <div className="lista-colunas">
         {quadrosIniciados.Columns && quadrosIniciados.Columns.length > 0 ? (
           quadrosIniciados.Columns.map(coluna => (
             <span key={coluna.id} className="tag-coluna">
-              {coluna.title}
+            <br/>  {"Tarefa:" +coluna.title} <button title="Editar" onClick={() => atualizarColumn(coluna)}>
+          <FaPen color ="#4ee6c2" />
+
+
+        </button>
+
+       
+        <button title="Excluir" onClick={()=>excluirColuna(coluna.id)}>
+          <FaTrash color="#f44336" />
+        </button><br/>
+              {"Descrição:" +coluna.description}
             </span>
           ))
         ) : (
@@ -137,20 +186,22 @@ const TelaPrincipal=()=>{
         </div>
          <div className='quadros'>
            <h1>Em Execução</h1> 
-             <div className='divisor'></div>
+             
                <div>
      
       {quadrosEm_Execucao.length > 0 ? (
         <ul>
           {quadrosEm_Execucao.map(quadrosEm_Execucao => (
             <li key={quadrosEm_Execucao.id}>
-              {quadrosEm_Execucao.title}   
+                 <div className='divisor'></div>
+              {"Quadro: "+quadrosEm_Execucao.title}   
                <div className="acoes-quadro">
-        <button title="Add" onClick={() => handleEditar(quadro.id)}>
+                <button title="Add" onClick={() => adiconarColuna(quadrosEm_Execucao)}>
           <MdOutlineAdd color="#4ee6c2" />
         </button>
-        <button title="Editar" onClick={() => handleEditar(quadro.id)}>
-          <FaPen color="#ffc107" />
+       
+        <button title="Editar" onClick={() => atualizarQuadro(quadrosEm_Execucao)}>
+          <FaPen color ="#4ee6c2" />
         </button>
 
        
@@ -159,11 +210,22 @@ const TelaPrincipal=()=>{
         </button>
          
       </div>
+        
       <div className="lista-colunas">
         {quadrosEm_Execucao.Columns && quadrosEm_Execucao.Columns.length > 0 ? (
           quadrosEm_Execucao.Columns.map(coluna => (
             <span key={coluna.id} className="tag-coluna">
-              {coluna.title}
+             {"Tarefa:" +coluna.title} <button title="Editar" onClick={() => atualizarColumn(coluna)}>
+          <FaPen color ="#4ee6c2" />
+
+
+        </button>
+
+       
+        <button title="Excluir" onClick={()=>excluirColuna(coluna.id)}>
+          <FaTrash color="#f44336" />
+        </button><br />
+              {"Descrição:" +coluna.description}
             </span>
           ))
         ) : (
@@ -183,20 +245,21 @@ const TelaPrincipal=()=>{
         </div>
         <div className='quadros'>
            <h1>Terminado</h1> 
-             <div className='divisor'></div>
+           
                <div>
      
       {quadrosTerminados.length > 0 ? (
         <ul>
           {quadrosTerminados.map(quadrosTerminados => (
             <li key={quadrosTerminados.id}>
-              {quadrosTerminados.title} 
+                <div className='divisor'></div> 
+              {"Quadro: "+quadrosTerminados.title} 
                <div className="acoes-quadro">
-        <button title="Add" onClick={() => handleEditar(quadro.id)}>
+        <button title="Add" onClick={() => adiconarColuna(quadrosTerminados)}>
           <MdOutlineAdd color="#4ee6c2" />
         </button>
-        <button title="Editar" onClick={() => handleEditar(quadro.id)}>
-          <FaPen color="#ffc107" />
+        <button title="Editar" onClick={() => atualizarQuadro(quadrosTerminados)}>
+          <FaPen color="#4ee6c2" />
         </button>
 
        
@@ -205,11 +268,22 @@ const TelaPrincipal=()=>{
         </button>
          
       </div>
+      
       <div className="lista-colunas">
         {quadrosTerminados.Columns && quadrosTerminados.Columns.length > 0 ? (
           quadrosTerminados.Columns.map(coluna => (
             <span key={coluna.id} className="tag-coluna">
-              {coluna.title}
+             <br/>    {"Tarefa:" +coluna.title} <button title="Editar" onClick={() => atualizarColumn(coluna)}>
+          <FaPen color ="#4ee6c2" />
+
+
+        </button>
+
+       
+        <button title="Excluir" onClick={()=>excluirColuna(coluna.id)}>
+          <FaTrash color="#f44336" />
+        </button><br />
+              {"Descrição:" +coluna.description}
             </span>
           ))
         ) : (

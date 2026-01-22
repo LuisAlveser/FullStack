@@ -55,8 +55,11 @@ async function atualizarQuadro(req,res) {
              status:statusFormatado
         };
         const [novoquadro]=await Board.update(quadro,{where:{id:id}});
-        if(novoquadro.length>0){
+        if(novoquadro>0){
         return res.status(200).json({message:"Quadro Atualizado com sucesso!!"});
+        }
+        else {
+            return res.status(404).json({ message: "Quadro não encontrado ou nenhum dado alterado." });
         }
     } catch (error) {
         return res.status(500).json({ error: error.message }); 
@@ -102,7 +105,7 @@ async function buscaQuadrosTerminadosPorUser(req,res) {
             },{model:User}],where:{id_owner:id,
               status: 'TERMINADO' 
     }});
-        if(quadro.length>0){
+        if(quadro.length>0&&quadro){
              return res.status(200).json(quadro);
         }
          return res.status(404).json({ message: "Usuário não tem quadros criados Terminados" });

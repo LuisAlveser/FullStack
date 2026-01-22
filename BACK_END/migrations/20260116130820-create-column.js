@@ -13,6 +13,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull:false
       },
+         description: {
+        type: Sequelize.STRING,
+        allowNull:false
+      },
+      
       id_board: {
         type: Sequelize.INTEGER,
         allowNull:false

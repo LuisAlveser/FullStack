@@ -67,8 +67,8 @@ async function atualizarUser(req,res) {
          const hash = await bcryptjs.hash(req.body.password, salt);
          novoUser.password=hash;
      }
-     const linhas= await User.update(novoUser,{where:{id:id}});
-        if (linhas ===null) {
+     const [linhas]= await User.update(novoUser,{where:{id:id}});
+        if (linhas.length>0) {
       return res.status(404).json({ message: "Usuário não encontrado ou nenhum dado alterado" });
     }
        res.status(200).json({

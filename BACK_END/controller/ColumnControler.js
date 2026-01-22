@@ -2,9 +2,11 @@ const { where } = require("sequelize");
 const{Column}=require("../models");
 
 async function criaçãoColuna(req,res) {
+   
     try {
         const column={
             title:req.body.title,
+          description:req.body.description,
             id_board:req.body.id_board,
 
         }
@@ -21,12 +23,14 @@ async function updateColumn(req,res) {
     const id =req.params.id;
     try {
       const upadateColumn ={
-       title :req.body.title
+       title :req.body.title,
+          description:req.body.description
       }  
-      const column =await Column.update(upadateColumn,{where:{id:id}});
-      if(column){
+      const [column] =await Column.update(upadateColumn,{where:{id:id}});
+      if(column>0){
         return res.status(200).json({message:"Coluna atualizada com sucesso !!"});
       }
+      return res.status(404).json({message:"Essa coluna não existe"});
     } catch (error) {
       return res.status(500).json({ error: error.message });  
     }

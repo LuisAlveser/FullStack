@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Column.init({
     title: DataTypes.STRING,
-    id_board: DataTypes.INTEGER
+    id_board: DataTypes.INTEGER,
+    description: DataTypes.STRING,
+    
   }, {
     sequelize,
     modelName: 'Column',
