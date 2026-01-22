@@ -1,7 +1,5 @@
 const { where } = require("sequelize");
-const{Board_Members}=require("../models");
-const{User}=require("../models");
-const{Board}=require("../models");
+const{Board_Members,User,Board}=require("../models");
 async function adicionar_membros (req,res) {
     try {
             const membros={

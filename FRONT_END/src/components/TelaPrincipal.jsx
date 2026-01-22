@@ -8,8 +8,10 @@ import { MdOutlineAdd } from "react-icons/md";
 
 const TelaPrincipal=()=>{
 
+
     const [usuario, setUsuario] = useState(null);
     const navigate = useNavigate();
+    
     const [quadrosIniciados,SetquadrosIniciados]=useState([]);
     const [quadrosEm_Execucao,SetquadrosEm_Excucao]=useState([]);
      const [quadrosTerminados,SetquadrosTerminados]=useState([]);
@@ -18,6 +20,11 @@ const TelaPrincipal=()=>{
 }
    const atualizarColumn = (column) => {
     navigate('/Column', { state: { dadoscolumn: column } });
+}
+   const editarConta = () => {
+    const usuario= localStorage.getItem("usuario");
+       const usuarioObjeto =JSON.parse(usuario);
+    navigate('/', { state: { dados: usuarioObjeto} });
 }
 
       const adiconarColuna = (quadro) => {
@@ -119,7 +126,8 @@ const TelaPrincipal=()=>{
         <div className='Tela'>
         <div className="layout-container">
         <header className='cabecalho'>
-             <h1 className='texto'>{usuario.name}!</h1>
+             <h1 className='texto'>{usuario.name}</h1>
+               <button className='botao' onClick={editarConta}>Editar Conta</button>
              <button className='botao'onClick={sair}>Sair</button>
               <button className='botao2' onClick={criarquadro}>Adicionar Quadro</button>
         </header>
@@ -136,7 +144,7 @@ const TelaPrincipal=()=>{
           {quadrosIniciados.map(quadrosIniciados => (
             <li key={quadrosIniciados.id}>
                   <div className='divisor'></div> 
-           {"Quadro:" +quadrosIniciados.title} <br/>  {"Lider :" +usuario.name} 
+           {"Quadro:" +quadrosIniciados.title} <br/> 
                <div className="acoes-quadro">
         <button title="Add" onClick={() =>adiconarColuna(quadrosIniciados)}>
           <MdOutlineAdd color="#4ee6c2" />

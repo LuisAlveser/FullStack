@@ -62,7 +62,7 @@ async function atualizarUser(req,res) {
         name:req.body.name,
         email:req.body.email
      }
-     if(req.body.pasword){
+     if(req.body.password){
          const salt = await bcryptjs.genSalt(10);
          const hash = await bcryptjs.hash(req.body.password, salt);
          novoUser.password=hash;
